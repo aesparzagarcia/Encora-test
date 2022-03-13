@@ -2,7 +2,7 @@
 
 Foreign exchange rates and currency conversion JSON API Fixer is a simple and lightweight API for current and historical foreign exchange (forex) rates.
 
-This project is an Android app which displays data from [fixer.io](https://www.themoviedb.org/) The Movie Database API.
+This project is an Android app which displays data from [fixer.io](https://fixer.io/) Fixer API.
 
 # Architecture
 <img width="593" alt="Screen Shot 2022-03-13 at 12 42 04" src="https://user-images.githubusercontent.com/9982524/158074941-61d6b558-46a2-45b2-be03-5eb0a119ec9d.png">
