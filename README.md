@@ -13,6 +13,7 @@ This project is an Android app which displays data from [fixer.io](https://www.t
 Will load the [Supported Symbols Endpoint](https://fixer.io/documentation#supportedsymbols) and display a vertical list of all supported countries along with their 3-letter currency symbol.
 Whn user start writing on the EditText, the list will start updating each time receives characters.
 When the user clicks on a list item (that is selecting a currency symbol), we will open our 2nd screen and use the currency symbol as the "base" currency to convert to multiple other currencies.
+
 ![aspiration-1](https://user-images.githubusercontent.com/9982524/158074925-ee445baa-0f23-4ff8-9262-c32a55937d6d.gif)
 
 > NOTE: This app works with Free Plan will only accept EUR as the selected base currency(on ApiService::class.java you can set any base to test error), so the candidate should use EUR to test for the happy path.
