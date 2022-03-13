@@ -21,6 +21,7 @@ When selecting any other currency symbol, the api will send back such an error `
 ### 2nd screen contains:
 + 1 EditText will always be fixed at the top that should only accept numbers, in which the user can enter the amount that he/she wants to convert to.
 + 1 RecyclerView to display all converted currency that are returned by the [Latest Rates Endpoint](https://fixer.io/documentation#latestrates). The list should have the 3-letter currency on the left following by the converted amount which should be rounded to the decimal places.
+
 ![aspiration-2](https://user-images.githubusercontent.com/9982524/158074929-b0c81251-3124-4c8c-bef5-c36a0b23c0d2.gif)
 
 # Build this project
