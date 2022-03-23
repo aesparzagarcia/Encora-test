@@ -41,4 +41,6 @@ fixerApiKey = "\"YOU_API_KEY\""
 - [Dagger 2](https://google.github.io/dagger/)
 - [RxJava 2](https://github.com/ReactiveX/RxJava)
 - [Groupie](https://github.com/lisawray/groupie)
+- [JUnit](https://junit.org/junit4/)
+- [Mockito](https://site.mockito.org/)
 - Other support libraries Androidx - AppCompat, RecyclerView, CardView, Design
