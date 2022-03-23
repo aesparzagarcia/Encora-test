@@ -54,7 +54,7 @@ ext {
     lifecycleLivedataKtxVersion='2.3.0-alpha01'
     legacySupportV4Version='1.0.0'
 
-    mockitoInlineVersion='3.0.0'
+    mockitoInlineVersion='3.8.0'
     testVersion='1.2.0'
     coreTestingVersion='2.1.0'
 

@@ -15,7 +15,7 @@ class FixerRepositoryImpl @Inject constructor(
         return apiService.getSymbols()
     }
 
-    override fun getLatest(currency: String): Flowable<Latest> {
-        return apiService.getLatest(currency)
+    override fun getLatest(base: String): Flowable<Latest> {
+        return apiService.getLatest(base)
     }
 }

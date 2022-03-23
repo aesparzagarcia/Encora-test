@@ -1,0 +1,12 @@
+{
+  "success":true,
+  "symbols":
+    {
+      "AED":"United Arab Emirates Dirham",
+      "AFN":"Afghan Afghani",
+      "ALL":"Albanian Lek",
+      "AMD":"Armenian Dram",
+      "ANG":"Netherlands Antillean Guilder",
+      "AOA":"Angolan Kwanza"
+    }
+}

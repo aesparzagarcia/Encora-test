@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.ares.aspiration.abstraction.base.BaseViewModel
 import com.ares.aspiration.abstraction.state.LoaderState
-import com.ares.aspiration.abstraction.util.Constants.TYPE
+import com.ares.aspiration.abstraction.util.Constants.CODE
 import com.ares.aspiration.abstraction.util.rx.SchedulerProvider
 import com.ares.aspiration.data.domain.FixerUseCase
 import com.ares.aspiration.data.entity.Latest
@@ -19,7 +19,11 @@ class LatestRatesViewModel @Inject constructor(
     val latest: LiveData<Latest>
         get() = _latest
 
-    private val _error = MutableLiveData<String>()
+    private val _errorCode = MutableLiveData<Int>()
+    val errorCode: LiveData<Int>
+        get() = _errorCode
+
+    private val _error= MutableLiveData<String>()
     val error: LiveData<String>
         get() = _error
 
@@ -27,8 +31,8 @@ class LatestRatesViewModel @Inject constructor(
     val state: LiveData<LoaderState>
         get() = _state
 
-    override fun loadLatest(currency: String) {
-        subscribe(useCase.getLatest(currency)
+    override fun loadLatest(base: String) {
+        subscribe(useCase.getLatest(base)
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.ui())
             .doOnSubscribe { showLoading() }
@@ -38,31 +42,27 @@ class LatestRatesViewModel @Inject constructor(
                 if (it.success) {
                     _latest.postValue(it)
                 } else {
-                    _error.postValue(it.error.get(TYPE).toString())
+                    _errorCode.postValue(it.error.get(CODE).asInt)
                 }
             }
         )
     }
 
-    override fun onErrorLatest(throwable: Throwable) {
+    private fun onErrorLatest(throwable: Throwable) {
         _error.postValue(throwable.message)
     }
 
-    override fun onSuccessError(message: String) {
-        _error.postValue(message)
-    }
-
-    private fun showLoading() {
+    override fun showLoading() {
         _state.postValue(LoaderState.ShowLoading)
     }
 
-    private fun hideLoading() {
+    override fun hideLoading() {
         _state.postValue(LoaderState.HideLoading)
     }
 }
 
 interface LatestRates {
     fun loadLatest(currency: String)
-    fun onErrorLatest(throwable: Throwable)
-    fun onSuccessError(message: String)
+    fun showLoading()
+    fun hideLoading()
 }

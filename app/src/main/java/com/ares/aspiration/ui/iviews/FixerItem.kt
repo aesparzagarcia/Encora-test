@@ -20,7 +20,11 @@ class FixerItem(
     override fun bind(viewBinding: ItemFixerBinding, position: Int) {
         viewBinding.apply {
             textItemOne.text = textOne
-            textItemTwo.text = if (source.contains(SOURCE.SYMBOLS.name)) textTwo else "$$textTwo"
+            textItemTwo.text = if (source.contains(SOURCE.SYMBOLS.name)) {
+                textTwo
+            } else {
+                textItemTwo.context.resources.getString(R.string.symbol_currency_quantity, textTwo)
+            }
             cardView.setOnClickListener {
                 action.invoke(textOne)
             }

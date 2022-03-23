@@ -32,12 +32,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
     }
 }
 
@@ -92,6 +98,7 @@ dependencies {
     testImplementation "androidx.test:rules:$testVersion"
     testImplementation "androidx.test:runner:$testVersion"
     testImplementation "org.mockito:mockito-inline:$mockitoInlineVersion"
+    testImplementation 'org.mockito:mockito-core:3.8.0'
     testImplementation "androidx.arch.core:core-testing:$coreTestingVersion"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

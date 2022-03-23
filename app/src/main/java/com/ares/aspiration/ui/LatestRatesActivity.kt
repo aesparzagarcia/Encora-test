@@ -1,19 +1,25 @@
 package com.ares.aspiration.ui
 
 import android.annotation.SuppressLint
-import android.content.DialogInterface
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.ares.aspiration.R
 import com.ares.aspiration.abstraction.state.LoaderState
-import com.ares.aspiration.abstraction.util.*
-import com.ares.aspiration.abstraction.util.Constants.CURRENCY
-import com.ares.aspiration.data.entity.*
+import com.ares.aspiration.abstraction.util.SOURCE
+import com.ares.aspiration.abstraction.util.plusAssign
+import com.ares.aspiration.abstraction.util.showDialogAlert
+import com.ares.aspiration.abstraction.util.showToast
+import com.ares.aspiration.abstraction.util.viewModelProvider
+import com.ares.aspiration.abstraction.util.Constants.BASE
+import com.ares.aspiration.abstraction.util.Constants.CURRENCY_RESTRICTED_ERROR
+import com.ares.aspiration.data.entity.Latest
+import com.ares.aspiration.data.entity.LatestSuccess
+import com.ares.aspiration.data.entity.RatesAttributes
 import com.ares.aspiration.databinding.ActivityLatestRatesBinding
 import com.ares.aspiration.di.DaggerMainComponent
 import com.ares.aspiration.di.module.FixerModule
@@ -22,6 +28,7 @@ import com.ares.aspiration.viewmodel.LatestRatesViewModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Section
+import java.lang.NumberFormatException
 import javax.inject.Inject
 
 class LatestRatesActivity: AppCompatActivity() {
@@ -30,7 +37,7 @@ class LatestRatesActivity: AppCompatActivity() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: LatestRatesViewModel
     private lateinit var binding: ActivityLatestRatesBinding
-    private lateinit var currency: String
+    private lateinit var base: String
     private lateinit var latest: Latest
     private val groupAdapter = GroupAdapter<GroupieViewHolder>()
 
@@ -39,7 +46,7 @@ class LatestRatesActivity: AppCompatActivity() {
         binding = ActivityLatestRatesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        currency = intent.getStringExtra(CURRENCY) ?: ""
+        base = intent.getStringExtra(BASE).orEmpty()
 
         initInjector()
 
@@ -47,7 +54,7 @@ class LatestRatesActivity: AppCompatActivity() {
 
         initLiveData()
 
-        viewModel.loadLatest(currency)
+        viewModel.loadLatest(base)
 
         initListeners()
     }
@@ -55,14 +62,22 @@ class LatestRatesActivity: AppCompatActivity() {
     private fun initLiveData() {
         viewModel.latest.observe(this, Observer { latest ->
             this.latest = latest
-            binding.editTextCurrency.hint = "Current base ${latest.base}"
+            binding.editTextCurrency.hint = resources.getString(R.string.current_base, latest.base)
             drawList()
         })
 
-        viewModel.error.observe(this, Observer { error ->
-            showDialogAlert(error, { showErrorLabel() }, this)
+        viewModel.errorCode.observe(this, Observer { error ->
+            if (error == CURRENCY_RESTRICTED_ERROR) {
+                showDialogAlert(resources.getString(R.string.free_api_error), this)
+            } else {
+                showDialogAlert(resources.getString(R.string.free_api_error), this)
+            }
             binding.editTextCurrency.isEnabled = false
-            binding.editTextCurrency.hint = error
+        })
+
+        viewModel.error.observe(this, Observer { error ->
+            showDialogAlert(error, this)
+            binding.editTextCurrency.isEnabled = false
         })
 
         viewModel.state.observe(this, Observer {
@@ -82,7 +97,11 @@ class LatestRatesActivity: AppCompatActivity() {
                 drawList()
             } else {
                 binding.imageViewClear.isVisible = true
-                drawList(it.toString().toInt())
+                try {
+                    drawList(Integer.parseInt(it.toString()))
+                } catch (ex: NumberFormatException) {
+                    showToast(resources.getString(R.string.max_input_exceeded))
+                }
             }
         }
 
@@ -127,9 +146,5 @@ class LatestRatesActivity: AppCompatActivity() {
             .fixerModule(FixerModule())
             .build()
             .injectLatest(this)
-    }
-
-    private fun showErrorLabel() {
-        binding.textViewError.isVisible = true
     }
 }

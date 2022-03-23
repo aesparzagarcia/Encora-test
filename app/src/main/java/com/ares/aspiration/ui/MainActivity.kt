@@ -1,9 +1,7 @@
 package com.ares.aspiration.ui
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -11,8 +9,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.ares.aspiration.abstraction.state.LoaderState
-import com.ares.aspiration.abstraction.util.*
-import com.ares.aspiration.abstraction.util.Constants.CURRENCY
+import com.ares.aspiration.abstraction.util.Constants.BASE
+import com.ares.aspiration.abstraction.util.SOURCE
+import com.ares.aspiration.abstraction.util.plusAssign
+import com.ares.aspiration.abstraction.util.showDialogAlert
+import com.ares.aspiration.abstraction.util.viewModelProvider
 import com.ares.aspiration.data.entity.Symbol
 import com.ares.aspiration.data.entity.SymbolsAttributes
 import com.ares.aspiration.data.entity.SymbolsSuccess
@@ -53,13 +54,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun openLatestRatesScreen(currency: String) {
         val i = Intent(this@MainActivity, LatestRatesActivity::class.java)
-        i.putExtra(CURRENCY, currency)
+        i.putExtra(BASE, currency)
         startActivity(i)
     }
 
     private fun initLiveData() {
         viewModel.error.observe(this, Observer { error ->
-            showDialogAlert(error, { showErrorLabel() }, this)
+            showDialogAlert(error, this)
             binding.editTextSearch.isEnabled = false
         })
 
@@ -95,11 +96,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initListeners() {
         binding.editTextSearch.addTextChangedListener { textToFind ->
-            if (textToFind.isNullOrEmpty()) {
-                binding.imageViewClear.isVisible = false
-            } else  {
-                binding.imageViewClear.isVisible = true
-            }
+            binding.imageViewClear.isVisible = textToFind.toString().isNotEmpty()
             filterCurrency(getSymbolsData(symbol).list.distinctBy { it.currencyCode }.filter {
                 groupAdapter.clear()
                 it.currencyCode.startsWith(textToFind.toString().trim(), true)
@@ -112,6 +109,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun filterCurrency(symbols: List<SymbolsAttributes>) {
+        showErrorLabel(symbols.isEmpty())
         symbols.forEach {
             groupAdapter += Section().apply {
                 add(FixerItem(it.currencyCode, it.countryName, { openLatestRatesScreen(it) }, SOURCE.SYMBOLS.name))
@@ -149,7 +147,7 @@ class MainActivity : AppCompatActivity() {
         compositeDisposable.clear()
     }
 
-    private fun showErrorLabel() {
-        binding.textViewError.isVisible = true
+    private fun showErrorLabel(show: Boolean) {
+        binding.textViewError.isVisible = show
     }
 }

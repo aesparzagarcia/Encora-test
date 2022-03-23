@@ -5,5 +5,5 @@ import io.reactivex.Flowable
 
 abstract class UseCase<T> {
     abstract fun getSymbols(): T
-    abstract fun getLatest(currency: String): Flowable<Latest>
+    abstract fun getLatest(base: String): Flowable<Latest>
 }

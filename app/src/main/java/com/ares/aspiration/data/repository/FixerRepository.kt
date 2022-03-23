@@ -7,5 +7,5 @@ import io.reactivex.Flowable
 
 interface FixerRepository {
     fun getSymbols(): Flowable<Symbol>
-    fun getLatest(currency: String): Flowable<Latest>
+    fun getLatest(base: String): Flowable<Latest>
 }

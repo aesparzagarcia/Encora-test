@@ -4,11 +4,7 @@ import android.view.View
 import androidx.viewbinding.ViewBinding
 import com.xwray.groupie.Item
 
-abstract class ViewBindingItem<T : ViewBinding> : Item<ViewHolder<T>> {
-
-    constructor() : super()
-
-    constructor(id: Long) : super(id)
+abstract class ViewBindingItem<T : ViewBinding>() : Item<ViewHolder<T>>() {
 
     override fun createViewHolder(itemView: View): ViewHolder<T> {
         return ViewHolder(inflate(itemView))
@@ -26,9 +22,4 @@ abstract class ViewBindingItem<T : ViewBinding> : Item<ViewHolder<T>> {
     abstract fun inflate(itemView: View): T
 
     abstract fun bind(viewBinding: T, position: Int)
-
-    @Suppress("UnusedPrivateMember")
-    private fun bind(viewBinding: T, position: Int, payloads: List<Any>) {
-        bind(viewBinding, position, payloads)
-    }
 }

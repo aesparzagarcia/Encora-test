@@ -15,7 +15,7 @@ open class FixerUseCase @Inject constructor(
         return repository.getSymbols()
     }
 
-    override fun getLatest(currency: String): Flowable<Latest> {
-        return repository.getLatest(currency)
+    override fun getLatest(base: String): Flowable<Latest> {
+        return repository.getLatest(base)
     }
 }

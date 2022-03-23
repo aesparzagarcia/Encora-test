@@ -14,6 +14,5 @@ interface ApiService {
     fun getSymbols(): Flowable<Symbol>
 
     @GET(LATEST_END_POINT)
-    fun getLatest(@Query("symbol") symbols: String,
-                  @Query("base") base: String = "EUR"): Flowable<Latest>
+    fun getLatest(@Query("base") base: String): Flowable<Latest>
 }
