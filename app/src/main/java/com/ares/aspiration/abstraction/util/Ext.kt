@@ -7,8 +7,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.ares.aspiration.abstraction.util.Constants.ERROR_MESSAGE
-import com.ares.aspiration.abstraction.util.Constants.GO_BACK
+import com.ares.aspiration.R
 import com.xwray.groupie.Group
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -33,11 +32,11 @@ fun Context.showDialogAlert(message: String, activity: Activity) {
     val dialogBuilder = AlertDialog.Builder(this)
     dialogBuilder.setMessage(message.cleartext())
         .setCancelable(false)
-        .setNegativeButton(GO_BACK) { _, _ ->
+        .setNegativeButton(this.resources.getString(R.string.go_back)) { _, _ ->
             activity.finish()
         }
 
     val alert = dialogBuilder.create()
-    alert.setTitle(ERROR_MESSAGE)
+    alert.setTitle(this.resources.getString(R.string.error_title))
     alert.show()
 }

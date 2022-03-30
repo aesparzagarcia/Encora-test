@@ -70,7 +70,7 @@ class LatestRatesActivity: AppCompatActivity() {
             if (error == CURRENCY_RESTRICTED_ERROR) {
                 showDialogAlert(resources.getString(R.string.free_api_error), this)
             } else {
-                showDialogAlert(resources.getString(R.string.free_api_error), this)
+                showDialogAlert(resources.getString(R.string.general_error), this)
             }
             binding.editTextCurrency.isEnabled = false
         })
@@ -118,7 +118,8 @@ class LatestRatesActivity: AppCompatActivity() {
         groupAdapter += Section().apply {
             getLatestRatesData(latest).list.forEach { latestRates ->
                 val totalQuantity = latestRates.quantity * quantity
-                add(FixerItem(latestRates.countryCode, totalQuantity.toString(), { }, SOURCE.LATEST.name))
+                val rounded = String.format("%.2f", totalQuantity)
+                add(FixerItem(latestRates.countryCode, rounded, { }, SOURCE.LATEST.name))
             }
 
             val layoutManagerS = GridLayoutManager(this@LatestRatesActivity, groupAdapter.spanCount).apply {

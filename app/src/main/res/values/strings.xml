@@ -3,6 +3,8 @@
     <string name="edit_text_search_hint">Look for a currency</string>
     <string name="symbol_currency_quantity">$%s</string>
     <string name="current_base">Current base %s</string>
+    <string name="go_back">Go back</string>
+    <string name="error_title">Sorry, there is an error…</string>
     <string name="max_input_exceeded">You have exceeded the num of characters!</string>
     <string name="edit_text_currency_hint">Set a quantity</string>
     <string name="no_data_error_message">Theres is no coincidence :(</string>
