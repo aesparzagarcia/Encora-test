@@ -44,3 +44,10 @@ fixerApiKey = "\"YOU_API_KEY\""
 - [JUnit](https://junit.org/junit4/)
 - [Mockito](https://site.mockito.org/)
 - Other support libraries Androidx - AppCompat, RecyclerView, CardView, Design
+
+# Improvements 
+- Use Jetpack Compose to accelerate UI development[Jetpack compose](https://developer.android.com/jetpack/compose?gclid=CjwKCAjwopWSBhB6EiwAjxmqDTqEsUKgs2ixOE3cJhpzz7ukTHOgrQOApGRT6AiIZXkhFUPl7JIQTRoCK5cQAvD_BwE&gclsrc=aw.ds)
+- Use Room to have off line version [Room](https://developer.android.com/jetpack/androidx/releases/room?gclid=CjwKCAjwopWSBhB6EiwAjxmqDYLTp3viOV6dBkANoG-cOAw6fh5AdsEWkIv97jGI0DRtVfI4eKs1ahoCyCcQAvD_BwE&gclsrc=aw.ds)
+- Use Navigation [Navigation](https://developer.android.com/guide/navigation/navigation-getting-started)
+- Use detekt Code analysis tool [Detekt](https://medium.com/livefront/android-static-code-checks-keep-your-codebase-tidy-with-detekt-408435665fc3)
+- Use Jacoco code coverage [Jacoco Report](https://github.com/arturdm/jacoco-android-gradle-plugin)
